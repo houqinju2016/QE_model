@@ -1,0 +1,86 @@
+data_configs:
+  lang_pair: "en-de"
+  train_data:
+    - "/home/user_data/houq/transformer_share/QE_en2de2017/train.tok.bpe.32000.src"
+    - "/home/user_data/houq/transformer_share/QE_en2de2017/train.tok.bpe.32000.mt"
+    - "/home/user_data/houq/transformer_share/QE_en2de2017/train.hter"
+  valid_data:
+    - "/home/user_data/houq/transformer_share/QE_en2de2017/dev.tok.bpe.32000.src"
+    - "/home/user_data/houq/transformer_share/QE_en2de2017/dev.tok.bpe.32000.mt"
+    - "/home/user_data/houq/transformer_share/QE_en2de2017/dev.hter"
+  vocabularies:
+    - type: "bpe"
+      dict_path: "/home/user_data/weihr/NMT_DATA_PY3/WMT14-DE-EN/vocab.en.json"
+      max_n_words: -1
+    - type: "bpe"
+      dict_path: "/home/user_data/weihr/NMT_DATA_PY3/WMT14-DE-EN/vocab.de.json"
+      max_n_words: -1
+  max_len:
+    - -1
+    - -1
+
+transformer_model_configs:
+  model: Transformer
+  n_layers: 6
+  n_head: 8
+  d_word_vec: 512
+  d_model: 512
+  d_inner_hid: 2048
+  dropout: 0.1
+  proj_share_weight: false
+  label_smoothing: 0.1
+
+transformer_model_bt_configs:
+  model: Transformer
+  n_layers: 6
+  n_head: 8
+  d_word_vec: 512
+  d_model: 512
+  d_inner_hid: 2048
+  dropout: 0.1
+  proj_share_weight: false
+  label_smoothing: 0.1
+
+model_configs:
+  model: QE
+  feature_size: 1028
+  hidden_size: 512
+  label_smoothing: 0
+  dropout: 0
+
+optimizer_configs:
+  optimizer: "adam"
+  learning_rate: 0.001
+  weight_decay: 0
+  grad_clip: 1.0
+  optimizer_params: ~
+  schedule_method: ~
+  scheduler_configs:
+    patience: 2
+    min_lr: 0.00005
+    scale: 0.5
+
+training_configs:
+  seed: 1234
+  max_epochs: 500
+  shuffle: false
+  use_bucket: false
+  buffer_size: 1000
+  batch_size: 32
+  batching_key: "samples"
+  update_cycle: 1
+  valid_batch_size: 32
+  disp_freq: 10
+  save_freq: 100
+  num_kept_checkpoints: 1
+  loss_valid_freq: 100
+  bleu_valid_freq: 1000
+  bleu_valid_batch_size: 5
+  bleu_valid_warmup: 1
+  bleu_valid_configs:
+    max_steps: 150
+    beam_size: 5
+    alpha: 0.0
+    sacrebleu_args: "--tokenize none -lc"
+    postprocess: false
+  early_stop_patience: 10

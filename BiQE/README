@@ -1,0 +1,10 @@
+1、train.sh
+用来预训练改造的神经机器翻译模型（transformer/dl4mt）
+2、train_rnn.sh
+用来训练单向的QE模型
+3、test_rnn.sh
+测试单向的QE模型
+4、train_rnn_bt.sh
+用来训练双向的QE模型
+5、test_rnn_bt.sh
+测试双向的QE模型

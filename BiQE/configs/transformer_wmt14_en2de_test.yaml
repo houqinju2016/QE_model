@@ -1,0 +1,65 @@
+data_configs:
+  lang_pair: "en-de"
+  train_data:
+    - "./test_data/newstest2013.tok.bpe.32000.en"
+    - "./test_data/newstest2013.tok.bpe.32000.de"
+  valid_data:
+    - "./test_data/newstest2013.tok.bpe.32000.en"
+    - "./test_data/newstest2013.tok.bpe.32000.de"
+  bleu_valid_reference: "./test_data/newstest2013.de"
+  vocabularies:
+    - type: "bpe"
+      dict_path: "./test_data/en.json"
+      max_n_words: -1
+    - type: "bpe"
+      dict_path: "./test_data/de.json"
+      max_n_words: -1
+  max_len:
+    - -1
+    - -1
+  num_refs: 1
+  eval_at_char_level: false
+
+model_configs:
+  model: Transformer
+  n_layers: 2
+  n_head: 3
+  d_word_vec: 24
+  d_model: 24
+  d_inner_hid: 17
+  dropout: 0.1
+  proj_share_weight: false
+  label_smoothing: 0.1
+
+optimizer_configs:
+  optimizer: "adam"
+  learning_rate: 0.2
+  grad_clip: -1.0
+  optimizer_params: ~
+  schedule_method: noam
+  scheduler_configs:
+    d_model: 24
+    warmup_steps: 8000
+
+training_configs:
+  seed: 1234
+  max_epochs: 2
+  shuffle: false
+  use_bucket: true
+  batch_size: 100
+  batching_key: "tokens"
+  update_cycle: 2
+  valid_batch_size: 20
+  disp_freq: 100
+  save_freq: 100
+  num_kept_checkpoints: 1
+  loss_valid_freq: 10
+  bleu_valid_freq: 100
+  bleu_valid_batch_size: 20
+  bleu_valid_warmup: 1
+  bleu_valid_configs:
+    max_steps: 10
+    beam_size: 4
+    alpha: 0.6
+    postprocess: True
+  early_stop_patience: 20
